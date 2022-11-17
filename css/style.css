@@ -1,0 +1,122 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-family: 'Lato', sans-serif;
+}
+
+body {
+	display: flex;
+	height: 100vh;
+	padding: 1.5rem;
+	background: linear-gradient(to bottom, #009688 15%, #D8DBD6 15% 100%);
+}
+
+.container {
+	flex: 0 0 100%;
+	display: flex;
+	margin: auto;
+	max-width: 1000px;
+	height: 100%;
+}
+
+.area-left {
+	display: flex;
+	flex-direction: column;
+	flex: 0 0 35%;
+	background-color: gold;
+}
+
+.area-left .user-info {
+	display: flex;
+	align-items: center;
+	gap: .5rem;
+	padding: .5rem 1rem;
+	background-color: #EAEAEA;
+}
+
+.area-left .user-info .avatar-user {
+	flex: 0 0 60px;
+	height: 60px;
+	object-fit: cover;
+	object-position: center;
+	border-radius: 100px;
+
+}
+
+.area-left .user-info .username {
+	flex: 1 0 auto;
+}
+
+.area-left .notifications {
+	display: flex;
+	gap: 1rem;
+	padding: .5rem 1rem;
+}
+
+.area-left .notifications .bell {
+	display: flex;
+	flex: 0 0 50px;
+	height: 50px;
+	border-radius: 100px;
+	background-color: white;
+	overflow: hidden;
+}
+
+.area-left .notifications .bell i {
+	margin: auto;
+}
+
+.area-left  .contacts {
+	flex: 1 0 0;
+	overflow-y: scroll;
+}
+
+.contact {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding: .5rem;
+	border-top: 1px solid black;
+}
+
+.contact img {
+	flex: 0 0 80px;
+	height: 80px;
+	object-fit: cover;
+	object-position: center;
+	border-radius: 100px;
+}
+
+.contact .details {
+	flex: 1 0 0;
+}
+
+.contact .first-line {
+	display: flex;
+	gap: .5rem;
+}
+
+.contact .username {
+	flex: 1 1 auto;
+	width: 0;
+	white-space: nowrap;
+	overflow-x: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+.area-right {
+	flex: 0 0 65%;
+	background-color: green;
+}

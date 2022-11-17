@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Boolzapp</title>
+
+	<!-- fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
+	<!-- font-awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<!-- styles -->
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+		[v-cloak] {
+			display: none;
+		}
+	</style>
+
+	<!-- vue -->
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.7.13/dist/vue.js" defer></script>
+	<script src="js/script.js" defer></script>
+</head>
+
+<body>
+	<div id="app" class="container" v-cloak>
+		<div class="area-left">
+			<div class="user-info">
+				<img class="avatar-user" src="img/avatar_io.jpg" alt="User avatar">
+				<span class="username">Henri</span>
+				<i class="fas fa-circle-notch"></i>
+				<i class="fas fa-comment-alt"></i>
+				<i class="fas fa-ellipsis-v"></i>
+			</div>
+
+			<div class="notifications">
+				<div class="bell">
+					<i class="fa fa-bell-slash"></i>
+				</div>
+
+				<div>
+					<div>Lorem ipsum dolor sit</div>
+					<div><a href="#!">Lorem ipsum dolor sit</a></div>
+				</div>
+			</div>
+
+			<div class="search">
+				<input type="text" placeholder="Cerca chat">
+			</div>
+
+			<div class="contacts">
+				<div v-for="contact in contacts" :key="contact.avatar" class="contact">
+					<img :src="'img/avatar' + contact.avatar + '.jpg'" :alt="contact.name">
+					<div class="details">
+						<div class="first-line">
+							<div class="username">{{ contact.name }}</div>
+							<div class="date">00:00</div>
+						</div>
+						<div class="second-line">
+							Ultimo messaggio
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="area-right">
+
+		</div>
+	</div>
+</body>
+
+</html>
+
+<!--
+<i class="fas fa-circle-notch"></i>
+<i class="fas fa-comment-alt"></i>
+<i class="fas fa-ellipsis-v"></i>
+
+<i class="fa fa-bell-slash"></i>
+
+<i class="fa fa-search"></i>
+
+<i class="fas fa-search"></i>
+<i class="fas fa-paperclip"></i>
+<i class="fas fa-ellipsis-v"></i>
+
+<i class="far fa-smile"></i>
+
+<i class="fa fa-microphone"></i>
+-->
