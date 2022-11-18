@@ -118,5 +118,103 @@ body {
 
 .area-right {
 	flex: 0 0 65%;
+	display: flex;
+	flex-direction: column;
 	background-color: green;
+}
+
+.area-right .user-info {
+	flex: 0 0 auto;
+	display: flex;
+	align-items: center;
+	gap: .5rem;
+	padding: .5rem 1rem;
+	background-color: #EAEAEA;
+}
+
+.area-right .user-info .avatar-user {
+	flex: 0 0 60px;
+	height: 60px;
+	object-fit: cover;
+	object-position: center;
+	border-radius: 100px;
+
+}
+
+.area-right .user-info .username {
+	flex: 1 0 auto;
+}
+
+.area-right .messages {
+	flex: 1 0 0;
+	display: flex;
+	flex-direction: column;
+	padding: 3rem 5rem;;
+}
+
+.messages .message {
+	position: relative;
+	flex: 0 1 auto;
+	margin-bottom: .5rem;
+	padding: 1em;
+	min-width: 125px;
+	max-width: 45%;
+	border-radius: .5em;
+}
+
+.messages .message.message-sent {
+	align-self: flex-end;
+	background-color: white;
+	overflow-wrap: break-word;
+}
+
+.messages .message.message-received {
+	align-self: flex-start;
+	background-color: lawngreen;
+}
+
+.message .sent-date {
+	position: absolute;
+	right: .5em;
+	bottom: .5em;
+	font-size: .7em;
+}
+
+.message .message-menu-toggler {
+	display: none;
+	padding: .3em;
+}
+
+.message .message-menu-toggler:hover {
+	cursor: pointer;
+}
+
+.message:hover .message-menu-toggler {
+	display: block;
+	position: absolute;
+	right: .5em;
+	top: .5em;
+}
+
+.message .message-menu {
+	display: none; /* TODO: farlo con il v-show */
+	position: absolute;
+	right: 0;
+	top: calc(100% - 5px);
+	list-style: none;
+	background-color: white;
+	box-shadow: 0 0 5px #888888;
+}
+
+.message .message-menu li {
+	padding: 1rem;
+}
+
+.message .message-menu li:hover {
+	cursor: pointer;
+	background-color: #EAEAEA;
+}
+
+.area-right .message-bar {
+	flex: 0 0 auto;
 }

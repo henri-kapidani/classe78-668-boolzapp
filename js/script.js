@@ -164,6 +164,32 @@ new Vue({
 				],
 			},
 		],
+		activeIndex: 0,
+		newMessage: '',
 	},
-	methods: {},
+	methods: {
+		setActiveIndex(index) {
+			this.activeIndex = index;
+		},
+		sendMessage() {
+			this.contacts[this.activeIndex].messages.push({
+				date: this.getNow(),
+				message: this.newMessage,
+				status: 'sent',
+			});
+			this.newMessage = '';
+			const receiverIndex = this.activeIndex; // questa variabile evita che la risposta venga inviata ad un'altra chat se l'utente cambia chat mentre il computer sta rispondendo
+			setTimeout(() => {
+				this.contacts[receiverIndex].messages.push({
+					// date: new Date().toISOString().replaceAll('-', '/').replaceAll('T', ' ').split('.')[0], // il formato però non è esattamente quello desiderato
+					date: this.getNow(),
+					message: 'Ok',
+					status: 'received',
+				});
+			}, 1500);
+		},
+		getNow() {
+			return luxon.DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss');
+		}
+	},
 });
