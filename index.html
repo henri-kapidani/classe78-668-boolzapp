@@ -32,7 +32,12 @@
 </head>
 
 <body>
-	<div id="app" class="container" v-cloak>
+	<div
+		id="app"
+		class="container"
+		v-cloak
+		@click="toggleMenu(null, $event)"
+	>
 		<div class="area-left">
 			<div class="user-info">
 				<img class="avatar-user" src="img/avatar_io.jpg" alt="User avatar">
@@ -54,24 +59,37 @@
 			</div>
 
 			<div class="search">
-				<input type="text" placeholder="Cerca chat">
+				<input
+					type="text"
+					placeholder="Cerca chat"
+					v-model="searchString"
+				>
 			</div>
 
 			<div class="contacts">
-				<div
-					v-for="(contact, i) in contacts"
+				<!-- <div
+					v-for="(contact, i) in filteredContacts"
+					v-show="contact.visible"
 					:key="contact.avatar"
 					class="contact"
 					@click="setActiveIndex(i)"
+					@dblclick="deleteContact(i)"
+				> -->
+				<div
+					v-for="(contact, i) in filteredContacts"
+					:key="contact.avatar"
+					class="contact"
+					@click="setActiveIndex(i)"
+					@dblclick="deleteContact(i)"
 				>
 					<img :src="'img/avatar' + contact.avatar + '.jpg'" :alt="contact.name">
 					<div class="details">
 						<div class="first-line">
 							<div class="username">{{ contact.name }}</div>
-							<div class="date">00:00</div>
 						</div>
+						<div class="date">{{ contact.messages.length ? contact.messages[contact.messages.length - 1].date : '' }}</div>
 						<div class="second-line">
-							Ultimo messaggio
+							{{ contact.messages.length ? contact.messages[contact.messages.length - 1].message : '' }}
 						</div>
 					</div>
 				</div>
@@ -80,49 +98,62 @@
 
 
 		<div class="area-right">
-			<div class="user-info">
-				<img class="avatar-user" :src="'img/avatar' + contacts[activeIndex].avatar + '.jpg'" :alt="contacts[activeIndex].name">
-				<span class="username">{{ contacts[activeIndex].name }}</span>
-				<i class="fas fa-search"></i>
-				<i class="fas fa-paperclip"></i>
-				<i class="fas fa-ellipsis-v"></i>
+			<div v-if="activeIndex === null">
+				seleziona un contatto
 			</div>
-
-			<div class="messages">
-				<div v-for="objMessage in contacts[activeIndex].messages" class="message" :class="'message-' + objMessage.status">
-					{{ objMessage.message }}
-					<div class="sent-date">{{ objMessage.date }}</div>
-					<i class="fa-solid fa-chevron-down message-menu-toggler"></i>
-					<ul class="message-menu">
-						<li>Info messaggio</li>
-						<li>Cancella messaggio</li>
-					</ul>
+			<div v-else-if="contacts.length">
+				<div class="user-info">
+					<img class="avatar-user" :src="'img/avatar' + contacts[activeIndex].avatar + '.jpg'" :alt="contacts[activeIndex].name">
+					<span class="username">{{ contacts[activeIndex].name }}</span>
+					<i class="fas fa-search"></i>
+					<i class="fas fa-paperclip"></i>
+					<i class="fas fa-ellipsis-v"></i>
 				</div>
-			</div>
 
-			<div class="message-bar">
-				<input type="text" placeholder="Scrivi un messaggio" v-model="newMessage" @keyup.enter="sendMessage">
+				<div class="messages">
+					<div
+						v-for="(objMessage, i) in contacts[activeIndex].messages"
+						class="message"
+						:class="'message-' + objMessage.status"
+					>
+						{{ objMessage.message }}
+						<div class="sent-date">{{ objMessage.date }}</div>
+
+						<i
+							class="fa-solid fa-chevron-down message-menu-toggler"
+							@click="toggleMenu(i)"
+						></i>
+
+						<!-- <i
+							class="fa-solid fa-chevron-down message-menu-toggler-obj"
+							@click="toggleMenuObject(i)"
+						></i> -->
+
+						<ul
+							v-if="activeMenu === i"
+							class="message-menu"
+							@click="toggleMenu(i)"
+						>
+							<li>Info messaggio</li>
+							<li @click="deleteMessage(i)">Cancella messaggio</li>
+						</ul>
+
+						<!-- <ul
+							v-if="objMessage.isMenuOpen"
+							class="message-menu"
+						>
+							<li>Info messaggio</li>
+							<li @click="deleteMessage(i)">Cancella messaggio</li>
+						</ul> -->
+					</div>
+				</div>
+
+				<div class="message-bar">
+					<input type="text" placeholder="Scrivi un messaggio" v-model="newMessage" @keyup.enter="sendMessage">
+				</div>
 			</div>
 		</div>
 	</div>
 </body>
 
 </html>
-
-<!--
-<i class="fas fa-circle-notch"></i>
-<i class="fas fa-comment-alt"></i>
-<i class="fas fa-ellipsis-v"></i>
-
-<i class="fa fa-bell-slash"></i>
-
-<i class="fa fa-search"></i>
-
-<i class="fas fa-search"></i>
-<i class="fas fa-paperclip"></i>
-<i class="fas fa-ellipsis-v"></i>
-
-<i class="far fa-smile"></i>
-
-<i class="fa fa-microphone"></i>
--->

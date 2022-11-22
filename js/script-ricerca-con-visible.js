@@ -5,6 +5,7 @@ new Vue({
 			{
 				name: 'Michele',
 				avatar: '_1',
+				visible: true,
 				messages: [
 					{
 						date: '10/01/2020 15:30:55',
@@ -26,6 +27,7 @@ new Vue({
 			{
 				name: 'Fabio',
 				avatar: '_2',
+				visible: true,
 				messages: [
 					{
 						date: '20/03/2020 16:30:00',
@@ -47,6 +49,7 @@ new Vue({
 			{
 				name: 'Samuele',
 				avatar: '_3',
+				visible: true,
 				messages: [
 					{
 						date: '28/03/2020 10:10:40',
@@ -68,6 +71,7 @@ new Vue({
 			{
 				name: 'Alessandro B.',
 				avatar: '_4',
+				visible: true,
 				messages: [
 					{
 						date: '10/01/2020 15:30:55',
@@ -84,6 +88,7 @@ new Vue({
 			{
 				name: 'Alessandro L.',
 				avatar: '_5',
+				visible: true,
 				messages: [
 					{
 						date: '10/01/2020 15:30:55',
@@ -100,6 +105,7 @@ new Vue({
 			{
 				name: 'Claudia',
 				avatar: '_6',
+				visible: true,
 				messages: [
 					{
 						date: '10/01/2020 15:30:55',
@@ -121,6 +127,7 @@ new Vue({
 			{
 				name: 'Federico',
 				avatar: '_7',
+				visible: true,
 				messages: [
 					{
 						date: '10/01/2020 15:30:55',
@@ -137,6 +144,7 @@ new Vue({
 			{
 				name: 'Davide',
 				avatar: '_8',
+				visible: true,
 				messages: [
 					{
 						date: '10/01/2020 15:30:55',
@@ -156,16 +164,13 @@ new Vue({
 				],
 			},
 		],
-		activeIndex: null,
-		activeMenu: null,
+		activeIndex: 0,
 		newMessage: '',
 		searchString: '',
 	},
 	methods: {
 		setActiveIndex(index) {
-			const objActiveContact = this.filteredContacts[index];
-			this.activeIndex = this.contacts.indexOf(objActiveContact);
-			this.activeMenu = null;
+			this.activeIndex = index;
 		},
 		sendMessage() {
 			this.contacts[this.activeIndex].messages.push({
@@ -187,28 +192,34 @@ new Vue({
 		getNow() {
 			return luxon.DateTime.now().toFormat('dd/MM/yyyy HH:mm:ss');
 		},
-		deleteMessage(index) {
-			const objActiveContact = this.filteredContacts[this.activeIndex];
-			objActiveContact.messages.splice(index, 1);
+		toggleMenuObject(index) {
+			this.contacts[this.activeIndex].messages[index].isMenuOpen = true;
 		},
-		deleteContact(index) {
-			const objActiveContact = this.filteredContacts[this.activeIndex];
-			const indexInContacts = this.contacts.indexOf(objActiveContact);
-			this.contacts.splice(indexInContacts, 1);
-		},
-		toggleMenu(index, event) {
-			if (!event || (event && !event.target.classList.contains('message-menu-toggler'))) {
-				if (this.activeMenu == index) {
-					this.activeMenu = null;
-				} else {
-					this.activeMenu = index;
-				}
-			}
-		},
+		//sostituita dal watcher
+		// filterContacts() {
+		// 	this.contacts.forEach(objContact => {
+		// 		if (objContact.name.trim().toLowerCase().includes(this.searchString.trim().toLowerCase())) {
+		// 			objContact.visible = true;
+		// 		} else {
+		// 			objContact.visible = false;
+		// 		}
+		// 	});
+		// },
 	},
-	computed: {
-		filteredContacts() {
-			return this.contacts.filter(objContact => objContact.name.trim().toLowerCase().includes(this.searchString.trim().toLowerCase()));
+	watch: {
+		searchString(newValue, oldValue) {
+			this.contacts.forEach(objContact => {
+				if (objContact.name.trim().toLowerCase().includes(newValue.trim().toLowerCase())) {
+					objContact.visible = true;
+				} else {
+					objContact.visible = false;
+				}
+			});
 		}
+	},
+	created() {
+		this.contacts.forEach(objContact => {
+			objContact.messages.forEach(objMessage => Vue.set(objMessage, 'isMenuOpen', false));
+		});
 	},
 });
